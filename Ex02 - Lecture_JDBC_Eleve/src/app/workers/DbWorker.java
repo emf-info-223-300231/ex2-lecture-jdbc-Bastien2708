@@ -88,27 +88,30 @@ public class DbWorker implements DbWorkerItf {
 
     @Override
     public Personne precedentPersonne() throws MyDBException {
-        lirePersonnes();
+        if (listePersonnes == null) {
+            lirePersonnes();
+        }
         Personne a = new Personne();
-        if (index == 0) {
-            a = listePersonnes.get(0);
-        } else {
+        if (index > 0) {
             a = listePersonnes.get(index - 1);
             index--;
         }
+        a = listePersonnes.get(0);
         return a;
     }
 
     @Override
     public Personne suivantPersonne() throws MyDBException {
-        lirePersonnes();
-        Personne a = new Personne();
-        if (index == listePersonnes.size()-1) {
-            a = listePersonnes.get(listePersonnes.size());
-        } else {
-            a = listePersonnes.get(index + 1);
-            index++;
+        if (listePersonnes == null) {
+            lirePersonnes();
         }
+        Personne a = new Personne();
+        if (index == listePersonnes.size() - 1) {
+            a = listePersonnes.get(listePersonnes.size());
+        }
+        a = listePersonnes.get(index + 1);
+        index++;
+
         return a;
 
     }
